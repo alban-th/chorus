@@ -11,7 +11,7 @@ import { Pokemon } from './pokemon.entity';
 
 @Entity()
 export class Profile extends BaseEntity {
-  @Column()
+  @Column({ unique: true })
   name: string;
 
   @ManyToMany(() => Pokemon)
