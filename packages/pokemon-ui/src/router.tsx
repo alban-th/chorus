@@ -23,4 +23,11 @@ export const router = createBrowserRouter([
       return { Component: EditProfile };
     },
   },
+  {
+    path: '/add-profile',
+    lazy: async () => {
+      const { AddProfile } = await import('./pages/add-profile');
+      return { Component: AddProfile };
+    },
+  },
 ]);
