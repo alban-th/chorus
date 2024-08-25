@@ -1,15 +1,26 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Home } from './pages/home';
-import { CreateProfile } from './pages/create-profile';
 
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    lazy: async () => {
+      const { Home } = await import('./pages/home');
+      return { Component: Home };
+    },
   },
   {
     path: '/create-profile',
-    element: <CreateProfile />,
+    lazy: async () => {
+      const { CreateProfile } = await import('./pages/create-profile');
+      return { Component: CreateProfile };
+    },
+  },
+  {
+    path: '/edit-profile/:profileId',
+    lazy: async () => {
+      const { EditProfile } = await import('./pages/edit-profile');
+      return { Component: EditProfile };
+    },
   },
 ]);
