@@ -1,8 +1,9 @@
+import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Pokemon, Profile } from '../database/entities';
-import { Repository } from 'typeorm';
+
 import { CreateProfileDto } from './create-profile.dto';
+import { Pokemon, Profile } from '../../database/entities';
 
 @Injectable()
 export class ProfileService {

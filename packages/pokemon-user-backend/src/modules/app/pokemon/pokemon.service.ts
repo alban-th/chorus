@@ -1,7 +1,8 @@
+import { Repository } from 'typeorm';
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Pokemon } from '../database/entities';
-import { Repository } from 'typeorm';
+
+import { Pokemon } from '../../database/entities';
 
 @Injectable()
 export class PokemonService implements OnModuleInit {
@@ -16,7 +17,7 @@ export class PokemonService implements OnModuleInit {
 
   async onModuleInit() {
     const pokemons = await this.pokemonRepository.find();
-    if (pokemons && pokemons.length === 150) {
+    if (pokemons && pokemons.length > 0) {
       return;
     }
 

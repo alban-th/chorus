@@ -1,6 +1,7 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { CreateProfileDto } from './create-profile.dto';
+
 import { ProfileService } from './profile.service';
+import { CreateProfileDto } from './create-profile.dto';
 
 @Controller('profile')
 export class ProfileController {
