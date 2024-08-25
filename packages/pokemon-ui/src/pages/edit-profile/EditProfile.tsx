@@ -1,8 +1,9 @@
 import React from 'react';
+
+import { usePokemons } from '../../modules/Pokemons';
+import { useProfile } from '../../modules/Profile';
 import { PokemonList } from '../../components/PokemonList';
 import { PokemonPicker } from '../../components/PokemonPicker';
-import { useProfile } from './useProfile';
-import { usePokemons } from './usePokemons';
 
 export function EditProfile() {
   const { profile, state: profileState, addPokemon, deletePokemon } = useProfile();

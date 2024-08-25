@@ -1,28 +1,26 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import type { Profile } from '../../types';
 import { ProfileList } from '../../components/ProfileList';
-import { useParams } from 'react-router-dom';
+import { useProfiles } from './useProfiles';
+import styled from '@emotion/styled';
 
-const getProfiles = async (): Promise<Profile[]> => {
-  const response = await fetch('/api/profile');
-  return await response.json();
-};
+const Container = styled.div`
+  margin: 1rem;
+`;
 
 export function Profiles() {
-  const { profileId } = useParams();
-  const { status, error, data } = useQuery({
-    queryKey: ['profiles'],
-    queryFn: getProfiles,
-  });
+  const { status, error, profiles, currentProfileId } = useProfiles();
 
-  if (status === 'pending') {
+  if (status.isFetching) {
     return <div>Loading...</div>;
   }
 
-  if(data === undefined || error) {
+  if (profiles === undefined || error) {
     return <div>Error: {error?.message}</div>;
   }
 
-  return <ProfileList profiles={data} selectedProfileId={profileId} />;
+  return (
+    <Container>
+      <ProfileList profiles={profiles} selectedProfileId={currentProfileId} />
+    </Container>
+  );
 }

@@ -4,15 +4,15 @@ import { Layout } from './modules/Layout/Layout';
 
 export const router = createBrowserRouter([
   {
+    path: '/',
+    lazy: async () => {
+      const { Home } = await import('./pages/home');
+      return { Component: Home };
+    },
+  },
+  {
     element: <Layout />,
     children: [
-      {
-        path: '/',
-        lazy: async () => {
-          const { Home } = await import('./pages/home');
-          return { Component: Home };
-        },
-      },
       {
         path: '/edit-profile/:profileId',
         lazy: async () => {
