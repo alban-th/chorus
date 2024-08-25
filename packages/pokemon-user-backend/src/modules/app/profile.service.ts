@@ -16,6 +16,7 @@ export class ProfileService {
   async findAll(): Promise<Profile[]> {
     const profiles = await this.profileRepository.find({
       relations: ['pokemons'],
+      order: { id: 'DESC' },
     });
     return profiles;
   }
