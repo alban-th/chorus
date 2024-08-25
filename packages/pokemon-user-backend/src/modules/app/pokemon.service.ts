@@ -7,8 +7,12 @@ import { Repository } from 'typeorm';
 export class PokemonService implements OnModuleInit {
   constructor(
     @InjectRepository(Pokemon)
-    private pokemonRepository: Repository<Pokemon>,
+    private pokemonRepository: Repository<Pokemon>
   ) {}
+
+  async findAll() {
+    return this.pokemonRepository.find({ order: { id: 'ASC' } });
+  }
 
   async onModuleInit() {
     const pokemons = await this.pokemonRepository.find();
@@ -18,7 +22,9 @@ export class PokemonService implements OnModuleInit {
 
     const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=150');
     const pokemonData = await response.json();
-    const newPokemons = pokemonData.results.map((pokemon) => this.pokemonRepository.create({ name: pokemon.name }));
+    const newPokemons = pokemonData.results.map((pokemon) =>
+      this.pokemonRepository.create({ name: pokemon.name })
+    );
     return this.pokemonRepository.insert(newPokemons);
   }
 }
