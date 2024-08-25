@@ -10,7 +10,7 @@ const getProfiles = async (): Promise<Profile[]> => {
 
 export function Profiles() {
   const { status, error, data } = useQuery({
-    queryKey: ['getProfiles'],
+    queryKey: ['profiles'],
     queryFn: getProfiles,
   });
 

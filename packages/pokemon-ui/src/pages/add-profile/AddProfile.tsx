@@ -29,7 +29,7 @@ export function AddProfile() {
     onSuccess: (data) => {
       // Invalidate and refetch
       setError(null);
-      queryClient.invalidateQueries({ queryKey: ['profile', data.id] });
+      queryClient.invalidateQueries({ queryKey: ['profiles'] });
       navigate('/edit-profile/' + data.id);
     },
     onError(error) {
