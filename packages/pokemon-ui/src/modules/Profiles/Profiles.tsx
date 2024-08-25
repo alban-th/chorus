@@ -9,12 +9,12 @@ const getProfiles = async (): Promise<Profile[]> => {
 };
 
 export function Profiles() {
-  const { isFetching, error, data } = useQuery({
-    queryKey: ['profiles'],
+  const { status, error, data } = useQuery({
+    queryKey: ['getProfiles'],
     queryFn: getProfiles,
   });
 
-  if (isFetching) {
+  if (status === 'pending') {
     return <div>Loading...</div>;
   }
 

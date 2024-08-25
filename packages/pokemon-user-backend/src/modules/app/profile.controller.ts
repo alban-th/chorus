@@ -12,6 +12,15 @@ export class ProfileController {
     return profiles;
   }
 
+  @Get(':id')
+  async findOne(@Param() params: { id: number }) {
+    const profile = await this.profileService.findOne(params.id);
+    if(!profile) {
+      throw new BadRequestException('Profile not found');
+    }
+    return profile;
+  }
+
   @Post()
   async addProfile(@Body() createCatDto: CreateProfileDto): Promise<string> {
     try {

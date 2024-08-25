@@ -20,6 +20,18 @@ export class ProfileService {
     return profiles;
   }
 
+  async findOne(id: number): Promise<Profile> {
+    try {
+      const profile = await this.profileRepository.find({
+        where: { id },
+        relations: ['pokemons'],
+      });
+      return profile[0];
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  }
+
   async create(dto: CreateProfileDto): Promise<Profile> {
     const newProfile = this.profileRepository.create({
       ...dto,
