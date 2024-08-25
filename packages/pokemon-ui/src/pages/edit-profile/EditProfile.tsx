@@ -2,7 +2,6 @@ import React from 'react';
 import { Profile } from '../../types';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { Profiles } from '../../modules/Profiles';
 
 const getProfile = async (id: string): Promise<Profile> => {
   const response = await fetch(`/api/profile/${id}`);
@@ -29,7 +28,6 @@ export function EditProfile() {
 
   return (
     <div>
-      <Profiles />
       <h2>Trainer</h2>
       <p>Username: {data.name}</p>
       <h2>Pokemons</h2>
