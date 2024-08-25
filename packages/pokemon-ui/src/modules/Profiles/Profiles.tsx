@@ -1,7 +1,8 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import type { Profile } from '../../types';
-import { ProfileList } from '../../components/ProfileList/ProfileList';
+import { ProfileList } from '../../components/ProfileList';
+import { useParams } from 'react-router-dom';
 
 const getProfiles = async (): Promise<Profile[]> => {
   const response = await fetch('/api/profile');
@@ -9,6 +10,7 @@ const getProfiles = async (): Promise<Profile[]> => {
 };
 
 export function Profiles() {
+  const { profileId } = useParams();
   const { status, error, data } = useQuery({
     queryKey: ['profiles'],
     queryFn: getProfiles,
@@ -22,5 +24,5 @@ export function Profiles() {
     return <div>Error: {error?.message}</div>;
   }
 
-  return <ProfileList profiles={data} />;
+  return <ProfileList profiles={data} selectedProfileId={profileId} />;
 }

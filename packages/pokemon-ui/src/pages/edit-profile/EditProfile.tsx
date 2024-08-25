@@ -2,6 +2,7 @@ import React from 'react';
 import { Profile } from '../../types';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
+import { PokemonList } from '../../components/PokemonList';
 
 const getProfile = async (id: string): Promise<Profile> => {
   const response = await fetch(`/api/profile/${id}`);
@@ -28,16 +29,14 @@ export function EditProfile() {
 
   return (
     <div>
-      <h2>Trainer</h2>
-      <p>Username: {data.name}</p>
-      <h2>Pokemons</h2>
-      <ul>
-        {data.pokemons.map((pokemon) => (
-          <li key={pokemon.id}>
-            <p>{pokemon.name}</p>
-          </li>
-        ))}
-      </ul>
+      <h1>{data.name}</h1>
+      <h2>Selected Pokemons</h2>
+      <PokemonList
+        pokemons={data.pokemons}
+        shouldShowAdd={data.pokemons.length < 6}
+        onAdd={() => console.log('add')}
+        onDelete={console.log}
+      />
     </div>
   );
 }

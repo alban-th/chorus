@@ -3,9 +3,11 @@ import { User, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { Profile } from '../../types';
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 
 export type ProfileListProps = {
   profiles: Profile[];
+  selectedProfileId?: string;
 };
 
 const Ul = styled.ul`
@@ -33,7 +35,7 @@ const Anchor = styled(Link)`
   color: #333;
 
   &:hover {
-    background-color: #f9f9f9;
+    background-color: #f3f3f3;
   }
 `;
 
@@ -54,12 +56,19 @@ const Number = styled.span`
   justify-content: center;
 `;
 
-export function ProfileList({ profiles }: ProfileListProps) {
+const selected = css`
+  background-color: #f3f3f3;
+`;
+
+export function ProfileList({ profiles, selectedProfileId = '' }: ProfileListProps) {
   return (
     <Ul className="">
       {profiles.map(({ id, name, pokemons }) => (
         <Li key={id}>
-          <Anchor to={`/edit-profile/${id}`}>
+          <Anchor
+            to={`/edit-profile/${id}`}
+            css={parseInt(selectedProfileId) === parseInt(id) ? selected : null}
+          >
             <User />
             <Name>{name}</Name>
             <Number>{pokemons.length}</Number>

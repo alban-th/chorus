@@ -12,7 +12,7 @@ const postProfile = async (profile: Pick<Profile, 'name'>) => {
       'Content-Type': 'application/json',
     },
   });
-  if(!response.ok) {
+  if (!response.ok) {
     const error = await response.json();
     console.log(error);
     throw new Error(error.message);
@@ -21,7 +21,7 @@ const postProfile = async (profile: Pick<Profile, 'name'>) => {
 };
 
 export function AddProfile() {
-    const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -33,7 +33,7 @@ export function AddProfile() {
       navigate('/edit-profile/' + data.id);
     },
     onError(error) {
-        setError(error.message);
+      setError(error.message);
     },
   });
   const form = useForm({
