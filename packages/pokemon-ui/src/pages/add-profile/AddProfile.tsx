@@ -15,7 +15,6 @@ const postProfile = async (profile: Pick<Profile, 'name'>) => {
   });
   if (!response.ok) {
     const error = await response.json();
-    console.log(error);
     throw new Error(error.message);
   }
   return await response.json();

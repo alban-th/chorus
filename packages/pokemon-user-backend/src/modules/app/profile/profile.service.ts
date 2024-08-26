@@ -44,7 +44,6 @@ export class ProfileService {
   }
 
   async addPokemon(profileId: number, pokemonId: number): Promise<Profile> {
-    console.log(profileId, pokemonId);
     const profile = await this.profileRepository.findOne({
       where: { id: profileId },
       relations: ['pokemons'], // Load the courses relation for the student
