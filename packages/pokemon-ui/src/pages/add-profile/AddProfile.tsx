@@ -85,11 +85,11 @@ export function AddProfile() {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: postProfile,
-    onSuccess: (data) => {
+    onSuccess: (profile) => {
       // Invalidate and refetch
       setError(null);
       queryClient.invalidateQueries({ queryKey: ['profiles'] });
-      navigate('/edit-profile/' + data.id);
+      navigate(`/team-editor/${profile.id}`);
     },
     onError(error) {
       setError(

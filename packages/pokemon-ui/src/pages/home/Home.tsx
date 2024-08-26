@@ -79,7 +79,7 @@ export function Home() {
   }
 
   if (profiles?.length === 0) {
-    setTimeout(() => navigate('/add-profile/'), 0);
+    setTimeout(() => navigate('/create-profile/'), 0);
     return <div>Redirecting...</div>;
   }
   //const profiles: {id: string, name: string}[] = [];
@@ -91,7 +91,7 @@ export function Home() {
       <Ul>
         {profiles?.map((profile) => (
           <Li key={profile.id}>
-            <Anchor to={`/edit-profile/${profile.id}`}>
+            <Anchor to={`/team-editor/${profile.id}`}>
               <Name>{profile.name}</Name>
             </Anchor>
           </Li>

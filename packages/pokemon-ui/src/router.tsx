@@ -11,7 +11,7 @@ export const router = createBrowserRouter([
     },
   },
   {
-    path: '/add-profile/',
+    path: '/create-profile/',
     lazy: async () => {
       const { AddProfile } = await import('./pages/add-profile');
       return { Component: AddProfile };
@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: '/edit-profile/:profileId',
+        path: '/team-editor/:profileId',
         lazy: async () => {
           const { EditProfile } = await import('./pages/edit-profile');
           return { Component: EditProfile };

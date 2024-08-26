@@ -68,7 +68,7 @@ export function ProfileList({ profiles, selectedProfileId = '' }: ProfileListPro
       {profiles.map(({ id, name, pokemons }) => (
         <Li key={id}>
           <Anchor
-            to={`/edit-profile/${id}`}
+            to={`/team-editor/${id}`}
             css={parseInt(selectedProfileId) === parseInt(id) ? selected : null}
           >
             <User />
