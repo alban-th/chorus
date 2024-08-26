@@ -1,137 +1,42 @@
 # Chorus Interview
 
-## About this Interview
+## Quick Description
 
-Welcome to Chorus Engineering's Interview project!
+### Backend
+ - Two entities were created: `Profile` and `Pokemon` under the `database` module.
+ - Two new modules were created under to the `App` Module: 
 
-We're looking for engineers who are experienced, passionate, and obsessed with strong systems and high productivity.
+#### pokemon module
+ - Initialize the pokemon data by fetching it from the Pokemon API at launch time using lifecycle event.
+ - `[GET] /api/pokemon`: retrieve all 150 pokemons on the DB (no pagination added at this point)
 
-In order to facilitate this, we are providing an interview project that mirrors the technical stack that used
-here at Chorus.
-
-**You, the interviewee, have the power to decide if this is the technology that you want to work on!**
-
-The goal of this interview is to identify strengths through a take home project, followed by
-a 1 hour pairing session that will extend your work by creating features together.
-
-## Tech Stack
-
-- React UI
-- Emotion CSS
-- Typescript
-- Node/NestJS Backend
-- NX Monorepo
-- Github Actions CI
-- PostgreSQL Database
-- Docker / Docker Desktop
-
-## Prerequisites
-
-Package Manager: pnpm 8.15.8
-
-Node: 20.14.0 (LTS)
-
-Docker
-
-## Instructions
-
-### Install Preqresuites
-1. [Install nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating)
-
-Use this command to install node and npm comes with it.
-```bash
-nvm install --lts 
-```
-
-2. Install pnpm
-```bash
-npm i -g pnpm@8.15.8
-```
-3. [Install Docker / Docker Desktop](https://www.docker.com/products/docker-desktop/)
+#### profile module
+ - `[POST] /api/profile`: create a new Profile.
+ - `[GET] /api/profile`: retrieve all profiles (no pagination added at this point).
+ - `[GET] /api/profile/:profileId`: retrieve a single profile.
+ - `[PUT | DELETE] /api/profile/:profileId/pokemon/:pokemonId`: adds/removes a pokemon to a profile's team.
 
 
-### Getting and Running the Repository
+### Frontend
+ - `/` will either list the existing profiles or redirect to `/create-profile/`.
+ - `/create-profile/` shows a simple form to create a new profile. Redirects you to `/team-editor/:profileId` on success.
+ - `/team-editor/:profileId` 
+    - Have a basic profile switcher on the top of the page, with a link to create a new profile
+    - Shows the pokemon on the team, clicking on the each selected pokemon removes them from the team.
+    - Until the team is full (6 members), the bottom of the page shows a filterable list of all available pokemons. Clicking on each one adds them to the team.
 
-**The Hiring Manager will send you a link to this repository.**
+## What is missing
+> I run out of time and wanted to focus on delivering a all requested features.
 
-Clone this repository, and run the commands below to get started.
+ - Tests.
+ - Accessibility.
+ - Pokemons order of insertion: on the edit team page, pokemons will be ordered by id and not by addition time. This is because the data is not recorded at the time.
+ - The UX is extremely basic and not very friendly.
+ - Terrible error messages, no 404...
 
-1. Run `pnpm install`
-2. Run `pm2 start`
+## A little remark
+ This project took me a lot more than a few hours (about 10 total over the weekend). Most of my time was spend figuring out the tools I had low knowledge of (such as pnpm, nx, vite, emotion, nest...)
+ A lot of time I unfortunately could spend on what listed in the missing section above.
 
-> Note: The API and React server will automatically watch for changes.
-
-You can manage start/stop using `pm2`.
-
-Use `pm2 logs` to see the logs from all processes.
-
-Use `pm2 stop all` to stop the servers.
-
-Use `pm2 delete all` to delete the entry from the pm2 process list.
-
-### Connecting to the Database
-Use whatever tool you'd like to connect to the database.
-
-[We recommend DataGrip.](https://www.jetbrains.com/datagrip/)
-
-Here are the connection details below.
-
-- **Database**: pokemon
-- **Username**: admin
-- **Password**: admin
-- **Host**: localhost
-- **Port**: 5432
-
-## Prompt
-
-Lets make a Pokémon Team builder!
-
-We want to create a way to select 6 Pokémon to be on our team.
-
-The UI should allow the user to:
-
-1. View a list of the first 150 Pokémon
-2. Select from the list of Pokémon
-3. Submit the Pokémon that we have selected to the backend.
-
-**It does not have to be a beautiful UX experience. We're aiming for functional.**
-
-### Completion Criteria
-
-Database Requirements
-
-- There should be a Profile table
-- There should be a Pokémon table
-- There should be a relationship between Pokémon and Profiles.
-
-UI Requirements
-
-- Show a list of the first 150 Pokémon
-- Show selectable Profiles
-- Select a profile, and choose up to 6 Pokémon.
-
-API Requirements
-
-- Return pokemon
-- Create Profiles
-- Handle receiving Pokémon related to Profiles
-
-## Submission Criteria
-
-All of your work should be located in a Github Repo.
-
-Ensure your repo is public, and submit the URL back to the hiring manager.
-
-### Troubleshooting
-
-> I can't execute pm2!
-
-pm2 is part of the devDependencies, so when you install the dependencies, you should be able to
-execute the binary from node_modules.
-
-Either use `pnpm pm2` or add `node_modules/.bin` to your `PATH`.
-
-> The requirements are confusing. I'm stuck.
-
-Contact the hiring manager, and inform them of the situation. Be specific and clear about your concerns or issues.
-
+ I'd be happy to share more feedbacks on the format of this test if we you decide to follow up :) 
+ That said, I really did enjoy all the learning I did the last 2 days!
