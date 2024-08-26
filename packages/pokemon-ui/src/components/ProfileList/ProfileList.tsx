@@ -23,19 +23,21 @@ const Anchor = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: middle;
-  border: 1px solid #eee;
-  border-right: none;
+  border: 1px solid #ccc;
+  color: #555;
   padding: 0.5rem;
+  margin: 0 0.2rem;
 
-  &:last-child {
-    border-right: 1px solid #eee;
-  }
 
   text-decoration: none;
-  color: #333;
 
   &:hover {
     background-color: #f3f3f3;
+  }
+  &:last-child::before {
+    display: block;
+    content: '';
+    flex: 1;
   }
 `;
 
@@ -75,6 +77,7 @@ export function ProfileList({ profiles, selectedProfileId = '' }: ProfileListPro
           </Anchor>
         </Li>
       ))}
+      <div css={css`flex: 1;`} />
       <Li>
         <Anchor to={`/add-profile`}>
           <Plus />

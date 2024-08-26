@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
-import { PawPrint } from 'lucide-react';
 import type { Pokemon } from '../../types';
 import styled from '@emotion/styled';
-import { Item } from './Item';
+import { Item, Placeholder } from './Item';
 
 const Ul = styled.ul`
   display: flex;
@@ -48,6 +47,13 @@ export function PokemonList({
           <Item id={id} name={name} deletePokemon={deletePokemon} />
         </Li>
       ))}
+      {Array(6 - pokemons.length)
+        .fill(null)
+        .map((_, index) => (
+          <Li key={index + pokemons.length}>
+            <Placeholder />
+          </Li>
+        ))}
     </Ul>
   );
 }

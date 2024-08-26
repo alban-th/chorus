@@ -3,6 +3,7 @@ import { Profile } from '../../types';
 import { useForm } from '@tanstack/react-form';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import styled from '@emotion/styled';
 
 const postProfile = async (profile: Pick<Profile, 'name'>) => {
   const response = await fetch('/api/profile', {
@@ -20,6 +21,64 @@ const postProfile = async (profile: Pick<Profile, 'name'>) => {
   return await response.json();
 };
 
+const Title = styled.h2`
+  font-size: 2rem;
+  margin-top: 2rem;
+  padding-left: 0.5rem;
+  text-align: center;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+`;
+
+const FormField = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+const Label = styled.label`
+  font-size: 1.2rem;
+  font-weight: bold;
+  width: fit-content;
+  margin-bottom: 1rem;
+`;
+const Input = styled.input`
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  width: 100%;
+
+  @media (min-width: 800px) {
+    width: 50%;
+  }
+`;
+
+const Submit = styled.button`
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  width: 100%;
+  margin: 0;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+
+  @media (min-width: 800px) {
+    width: 50%;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
+  margin: 0;
+`;
+  
+
 export function AddProfile() {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -33,7 +92,11 @@ export function AddProfile() {
       navigate('/edit-profile/' + data.id);
     },
     onError(error) {
-      setError(error.message);
+      setError(
+        error.message.includes('duplicate')
+          ? 'Name already exist, please pick another one.'
+          : error.message
+      );
     },
   });
   const form = useForm({
@@ -47,30 +110,35 @@ export function AddProfile() {
 
   return (
     <div>
-      <h1>Add Profile</h1>
-      {error && <div>{error}</div>}
-      <form
+      <Title>Add Profile</Title>
+
+      <Form
         onSubmit={(e) => {
           e.preventDefault();
           e.stopPropagation();
           form.handleSubmit();
         }}
       >
-        <div>
-          <form.Field
-            name="name"
-            children={(field) => (
-              <input
+        <form.Field
+          name="name"
+          children={(field) => (
+            <FormField>
+              <Label htmlFor={field.name}>Trainner's name</Label>
+              {error && <ErrorMessage>{error}</ErrorMessage>}
+              <Input
                 name={field.name}
+                id={field.name}
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
+                placeholder="Ash Ketchum"
               />
-            )}
-          />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+            </FormField>
+          )}
+        />
+
+        <Submit type="submit">Submit</Submit>
+      </Form>
     </div>
   );
 }

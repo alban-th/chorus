@@ -11,6 +11,13 @@ export const router = createBrowserRouter([
     },
   },
   {
+    path: '/add-profile/',
+    lazy: async () => {
+      const { AddProfile } = await import('./pages/add-profile');
+      return { Component: AddProfile };
+    },
+  },
+  {
     element: <Layout />,
     children: [
       {
@@ -18,13 +25,6 @@ export const router = createBrowserRouter([
         lazy: async () => {
           const { EditProfile } = await import('./pages/edit-profile');
           return { Component: EditProfile };
-        },
-      },
-      {
-        path: '/add-profile',
-        lazy: async () => {
-          const { AddProfile } = await import('./pages/add-profile');
-          return { Component: AddProfile };
         },
       },
     ],

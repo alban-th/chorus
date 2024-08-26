@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { useProfiles } from '../../modules/Profiles';
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
+import { PlusCircle } from 'lucide-react';
 
 const Ul = styled.ul`
   display: flex;
@@ -31,15 +33,11 @@ const Anchor = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #eee;
-  border-right: none;
+  border: 1px solid #888;
   padding: 0.5rem;
   width: 100%;
   height: 100%;
-
-  &:last-child {
-    border-right: 1px solid #eee;
-  }
+  border-radius: 0.3rem;
 
   text-decoration: none;
   color: #333;
@@ -53,6 +51,24 @@ const Name = styled.span`
   font-size: 1.1rem;
   font-weight: bold;
 `;
+const Title = styled.h1`
+  text-align: center;
+  margin: 2rem;
+`;
+const SubTitle = styled.h2`
+  text-align: center;
+  margin: 2rem;
+`;
+
+const addNew = css`
+  border: 1px solid #34442e;
+  color: #34442e;
+  fornt-weight: bold;
+  background-color: #e4ede1;
+  justify-content: space-between;
+  padding: 1rem;
+  border-radius: 0.3rem;
+`;
 
 export function Home() {
   const { profiles, status } = useProfiles();
@@ -63,20 +79,29 @@ export function Home() {
   }
 
   if (profiles?.length === 0) {
-    navigate('/create-profile');
+    setTimeout(() => navigate('/add-profile/'), 0);
+    return <div>Redirecting...</div>;
   }
+  //const profiles: {id: string, name: string}[] = [];
 
   return (
     <div>
-      <h1>Pick a trainer</h1>
+      <Title>Welcome!</Title>
+      <SubTitle>Pick a trainer</SubTitle>
       <Ul>
         {profiles?.map((profile) => (
-          <Li>
+          <Li key={profile.id}>
             <Anchor to={`/edit-profile/${profile.id}`}>
               <Name>{profile.name}</Name>
             </Anchor>
           </Li>
         ))}
+        <Li>
+          <Anchor to={`/add-profile`} css={addNew}>
+            <PlusCircle />
+            <Name>Create a New Profile</Name>
+          </Anchor>
+        </Li>
       </Ul>
     </div>
   );

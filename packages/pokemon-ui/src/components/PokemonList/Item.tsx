@@ -1,23 +1,23 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { PawPrint, X } from 'lucide-react';
 import { useCallback, useState } from 'react';
 
-const Button = styled.button`
+const button = css`
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid #eee;
-  border-right: none;
   padding: 0.5rem;
   width: 100%;
   height: 100%;
-
-  &:last-child {
-    border-right: 1px solid #eee;
-  }
-
   text-decoration: none;
   color: #333;
+  background-color: #f5f5f5;
+`;
+
+const buttonInteraction = css`
+  ${button};
 
   &:hover {
     background-color: #e0c5c5;
@@ -43,7 +43,8 @@ export function Item({ id, name, deletePokemon }: ItemProps) {
   const setHovered = useCallback((b: boolean) => () => setIsHovered(b), []);
 
   return (
-    <Button
+    <button
+      css={buttonInteraction}
       type="button"
       onClick={deletePokemon(id)}
       onMouseOver={setHovered(true)}
@@ -51,6 +52,16 @@ export function Item({ id, name, deletePokemon }: ItemProps) {
     >
       {isHovered ? <X /> : <PawPrint />}
       <Name>{name}</Name>
-    </Button>
+    </button>
+  );
+}
+
+export function Placeholder() {
+  return (
+    <span css={button}>
+      <PawPrint css={css`
+        color: #ccc;
+      `} />
+    </span>
   );
 }
