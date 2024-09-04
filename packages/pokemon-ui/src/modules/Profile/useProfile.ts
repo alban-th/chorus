@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { Profile } from '../../types';
+import { useMemo } from 'react';
 
 const getProfile = async (id: string): Promise<Profile> => {
   const response = await fetch(`/api/profile/${id}`);
@@ -47,18 +48,32 @@ export function useProfile() {
 
   const addPokemonMutation = useMutation<Profile, Error, string>({
     mutationFn: addPokemon(profileId),
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['profile', profileId] });
-      queryClient.invalidateQueries({ queryKey: ['profiles'] });
-    },
+    mutationKey: ['addPokemon'],
+    onSettled: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['profile', profileId] }),
+        queryClient.invalidateQueries({ queryKey: ['profiles'] }),
+      ]),
   });
   const deletePokemonMutation = useMutation<Profile, Error, string>({
     mutationFn: deletePokemon(profileId),
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['profile', profileId] });
-      queryClient.invalidateQueries({ queryKey: ['profiles'] });
-    },
+    mutationKey: ['deletePokemon'],
+    onSuccess: (data) =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['profile', profileId] }),
+        queryClient.invalidateQueries({ queryKey: ['profiles'] }),
+      ]),
   });
+
+  const isPending = useMemo(
+    () => addPokemonMutation.isPending || deletePokemonMutation.isPending,
+    [addPokemonMutation.isPending, deletePokemonMutation.isPending]
+  );
+  const pendingVariables = useMemo(() => ({
+    addPokemon: addPokemonMutation.variables,
+    deletePokemon: deletePokemonMutation.variables,
+  }), [addPokemonMutation.variables, deletePokemonMutation.variables]);
+  
 
   return {
     profileId,
@@ -66,5 +81,7 @@ export function useProfile() {
     state: { isFetching, isError },
     addPokemon: addPokemonMutation.mutate,
     deletePokemon: deletePokemonMutation.mutate,
+    isPending,
+    pendingVariables,
   };
 }

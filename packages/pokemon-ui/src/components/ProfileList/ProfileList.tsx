@@ -77,9 +77,13 @@ export function ProfileList({ profiles, selectedProfileId = '' }: ProfileListPro
           </Anchor>
         </Li>
       ))}
-      <div css={css`flex: 1;`} />
+      <div
+        css={css`
+          flex: 1;
+        `}
+      />
       <Li>
-        <Anchor to={`/add-profile`}>
+        <Anchor to={`/create-profile`}>
           <Plus />
           <Name>Add Profile</Name>
         </Anchor>
