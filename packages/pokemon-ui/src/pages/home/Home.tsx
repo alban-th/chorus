@@ -74,7 +74,7 @@ export function Home() {
   const { profiles, status } = useProfiles();
   const navigate = useNavigate();
 
-  if (status.isFetching) {
+  if (status.isFetching && !status.isPending) {
     return <div>Loading...</div>;
   }
 
@@ -97,7 +97,7 @@ export function Home() {
           </Li>
         ))}
         <Li>
-          <Anchor to={`/add-profile`} css={addNew}>
+          <Anchor to={`/create-profile/`} css={addNew}>
             <PlusCircle />
             <Name>Create a New Profile</Name>
           </Anchor>

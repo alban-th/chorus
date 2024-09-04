@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutationState, useQuery } from '@tanstack/react-query';
 import type { Profile } from '../../types';
 import { useParams } from 'react-router-dom';
 
@@ -13,11 +13,14 @@ export function useProfiles() {
     queryKey: ['profiles'],
     queryFn: getProfiles,
   });
+  const isPending = useMutationState({
+    select: (mutation) => mutation.state.status === 'pending',
+  });
 
   return {
     currentProfileId: profileId,
     error,
     profiles: data,
-    status: { isFetching, isError },
+    status: { isFetching, isError, isPending },
   };
 }

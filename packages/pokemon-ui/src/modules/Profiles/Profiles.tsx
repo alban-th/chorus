@@ -10,7 +10,7 @@ const Container = styled.div`
 export function Profiles() {
   const { status, error, profiles, currentProfileId } = useProfiles();
 
-  if (status.isFetching) {
+  if (status.isFetching && !status.isPending) {
     return <div>Loading...</div>;
   }
 

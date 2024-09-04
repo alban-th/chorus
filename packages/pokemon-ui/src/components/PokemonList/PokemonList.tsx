@@ -27,11 +27,13 @@ const Li = styled.li`
 export type PokemonListProps = {
   pokemons: Pokemon[];
   onDelete: (id: string) => void;
+  pendingPokemon?: Pokemon;
 };
 
 export function PokemonList({
   onDelete,
   pokemons,
+  pendingPokemon,
 }: PokemonListProps) {
   const deletePokemon = useCallback(
     (id: string) => () => {
@@ -47,6 +49,14 @@ export function PokemonList({
           <Item id={id} name={name} deletePokemon={deletePokemon} />
         </Li>
       ))}
+      {pendingPokemon && (
+        <Li key={pendingPokemon.id}>
+          <Item
+            id={pendingPokemon.id}
+            name={pendingPokemon.name}
+          />
+        </Li>
+      )}
       {Array(6 - pokemons.length)
         .fill(null)
         .map((_, index) => (

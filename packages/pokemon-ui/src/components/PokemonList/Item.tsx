@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { PawPrint, X } from 'lucide-react';
+import { Loader, PawPrint, X } from 'lucide-react';
 import { useCallback, useState } from 'react';
 
 const button = css`
@@ -36,7 +36,7 @@ const Name = styled.span`
 type ItemProps = {
   id: string;
   name: string;
-  deletePokemon: (id: string) => () => void;
+  deletePokemon?: (id: string) => () => void;
 };
 export function Item({ id, name, deletePokemon }: ItemProps) {
   const [isHovered, setIsHovered] = useState(false);
@@ -46,7 +46,7 @@ export function Item({ id, name, deletePokemon }: ItemProps) {
     <button
       css={buttonInteraction}
       type="button"
-      onClick={deletePokemon(id)}
+      onClick={deletePokemon?.(id)}
       onMouseOver={setHovered(true)}
       onMouseLeave={setHovered(false)}
     >
